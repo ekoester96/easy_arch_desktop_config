@@ -1,129 +1,151 @@
-# Arch Linux Post-Installation Script
+# Arch Linux Installation Scripts
 
-A streamlined bash script to automate the post-installation setup of Arch Linux with desktop environment configuration, essential applications, and system utilities.
+A complete set of bash scripts to automate both the base Arch Linux installation and post-installation configuration with desktop environment setup.
 
 ## Overview
 
-This script automates the configuration of a fresh Arch Linux installation, allowing you to quickly set up a fully functional desktop environment with commonly used applications and security features.
+This repository contains two scripts:
+1. **auto-arch-install.sh** - Automates the base Arch Linux installation
+2. **archinstall.sh** - Automates post-installation setup with desktop environment and applications
 
 ## Features
 
-- **System Updates**: Optional full system update via `pacman -Syu`
-- **Desktop Environment Choice**: 
-  - KDE Plasma with SDDM display manager
-  - GNOME with GDM display manager
-- **Essential Applications**:
-  - Terminal emulators (Alacritty)
-  - Text editors (Neovim, Nano, VS Code)
-  - Office suite (LibreOffice)
-  - Web browser (Firefox)
-  - System utilities (htop, neofetch, timeshift)
-  - Archive tools (zip, unzip, p7zip)
-  - AUR helper (yay)
-- **Optional Features**:
-  - Printing support (CUPS, print-manager)
-  - Firewall configuration (nftables, firewalld)
+### Base Installation Script (auto-arch-install.sh)
+- Automated disk partitioning (GPT/UEFI)
+- Base system installation
+- User and root account configuration
+- Timezone and locale setup
+- Network configuration with NetworkManager
+- GRUB bootloader installation
+- Interactive prompts for customization
+
+### Post-Installation Script (archinstall.sh)
+- System updates
+- Desktop environment choice (KDE or GNOME)
+- Essential applications installation
+- Optional printing support
+- Optional firewall configuration
 
 ## Prerequisites
 
-- Fresh Arch Linux installation completed via `archinstall`
-- Root access
+- Arch Linux installation media (USB or CD)
+- UEFI-capable system (recommended)
 - Internet connection
-- Git installed (`pacman -S git`)
+- Backup of important data
 
-## Installation Instructions
+## Installation Guide
 
-### Method 1: Clone from GitHub
+### Part 1: Base System Installation
 
-1. Boot into your fresh Arch Linux installation and log in as root
-2. Run the initial Arch installation:
+1. **Boot from Arch Linux installation media**
+
+2. **Download the base installation script**:
 ```bash
-   archinstall
+   # If you have internet access
+   curl -O https://raw.githubusercontent.com/ekoester96/easy_arch_desktop_config/main/easy_arch_install.sh
+   
+   # Or use wget
+   wget https://raw.githubusercontent.com/ekoester96/easy_arch_desktop_config/main/easy_arch_install.sh
 ```
 
-3. Configure the following in archinstall:
-   - **Mirrors**: Select your country
-   - **Disk Configuration**: Use default settings
-   - **Root Password**: Set a secure password
-   - **User Account**: Create your user account
-   - **Network Configuration**: Select NetworkManager
-
-4. When prompted, select **Yes** to login as chroot
-
-5. Install Git:
+3. **Make the script executable**:
 ```bash
-   pacman -S git
+   chmod +x auto-arch-install.sh
 ```
 
-6. Clone the repository:
+4. **Run the installation script**:
 ```bash
-   git clone https://github.com/ekoester96/Bash-Scripts
+   ./auto-arch-install.sh
 ```
 
-7. Navigate to the directory:
+5. **Follow the interactive prompts**:
+   - Select installation disk (e.g., `/dev/sda` or `/dev/nvme0n1`)
+   - **WARNING**: All data on the selected disk will be erased!
+   - Enter hostname
+   - Create user account (username and password)
+   - Set root password
+   - Configure timezone (e.g., `America/New_York`)
+   - Set locale (default: `en_US.UTF-8`)
+   - Choose keyboard layout (default: `us`)
+
+6. **After installation completes**:
 ```bash
+   umount -R /mnt
+   reboot
+```
+
+7. **Remove installation media and boot into your new system**
+
+### Part 2: Post-Installation Setup
+
+1. **Login with your created user account**
+
+2. **Install Git** (if not installed during base installation):
+```bash
+   sudo pacman -S git
+```
+
+3. **Clone the repository**:
+```bash
+   git clone https://github.com/ekoester96/easy_arch_desktop_config
    cd Bash-Scripts
 ```
 
-8. Make the script executable:
+4. **Make the post-installation script executable**:
 ```bash
-   chmod 744 archinstall.sh
+   chmod +x archinstall.sh
 ```
 
-9. Run the script:
+5. **Run the post-installation script**:
 ```bash
    ./archinstall.sh
 ```
 
-### Method 2: Direct Download
+6. **Follow the interactive prompts**:
+   - System update (recommended: Yes)
+   - Desktop environment (KDE or GNOME)
+   - Printing support (optional)
+   - Firewall configuration (optional)
 
-Download the script directly using wget:
+7. **Start your desktop environment**:
 ```bash
-wget https://raw.githubusercontent.com/ekoester96/Bash-Scripts/refs/heads/main/archinstall.sh
-chmod 744 archinstall.sh
+   # For KDE
+   sudo systemctl start sddm.service
+   
+   # For GNOME
+   sudo systemctl start gdm.service
+```
+
+## Quick Installation (Alternative Method)
+
+If you prefer to skip cloning and run scripts directly:
+
+### Base Installation
+```bash
+curl -O https://raw.githubusercontent.com/ekoester96/easy_arch_desktop_config/main/easy_arch_install.sh
+chmod +x auto-arch-install.sh
+./auto-arch-install.sh
+```
+
+### Post-Installation
+```bash
+wget https://raw.githubusercontent.com/ekoester96/easy_arch_desktop_config/main/arch_desktop_config.sh
+chmod +x archinstall.sh
 ./archinstall.sh
 ```
 
-## Usage
+## What Gets Installed
 
-The script uses an interactive menu system. When prompted:
+### Base System
+- Linux kernel and firmware
+- Base development tools
+- NetworkManager
+- GRUB bootloader
+- Basic text editors (vim, nano)
 
-- **Press 1 or 2** to select your choice
-- **Press Enter** to confirm "Yes"
-- **Press n** to decline or select "No"
+### Post-Installation Packages
 
-### Interactive Prompts
-
-1. **System Update**: Choose whether to update all packages
-2. **Desktop Environment**: Select between KDE or GNOME
-3. **Printing Support**: Enable printer functionality (optional)
-4. **Firewall**: Configure firewall protection (optional)
-
-## Post-Installation Steps
-
-After the script completes:
-
-1. **Exit chroot and reboot**:
-```bash
-   exit
-   reboot
-```
-
-2. **Start the display manager** (if not auto-starting):
-   - For KDE:
-```bash
-     systemctl start sddm.service
-```
-   - For GNOME:
-```bash
-     systemctl start gdm.service
-```
-
-3. **Display Protocol**: If you encounter a blank screen after login, select **X11** as the display server protocol on the login screen (instead of Wayland)
-
-## Installed Packages
-
-### Core Utilities
+#### Core Utilities
 - `zip`, `unzip`, `p7zip` - Archive management
 - `alacritty` - Terminal emulator
 - `yay` - AUR helper
@@ -132,42 +154,125 @@ After the script completes:
 - `neofetch` - System information
 - `timeshift` - System backup
 
-### Desktop Applications
+#### Desktop Applications
 - `libreoffice` - Office suite
 - `firefox` - Web browser
 - `vscode` - Code editor
 
-### Fonts
+#### Fonts
 - `ttf-dejavu`
 - `ttf-liberation`
 - `noto-fonts`
 
-### Desktop Environments
+#### Desktop Environments
 - **KDE**: `plasma-desktop`, `dolphin`, `dolphin-plugins`, `sddm`
 - **GNOME**: `gnome`, `nautilus`, `gdm`
 
-### Optional Components
+#### Optional Components
 - **Printing**: `print-manager`, `cups`, `system-config-printer`
 - **Firewall**: `nftables`, `firewalld`
 
+## Partitioning Scheme
+
+The base installation script creates:
+- **EFI Partition**: 512MB (FAT32)
+- **Root Partition**: Remaining space (ext4)
+
 ## Troubleshooting
 
-### Blank Screen After Login
-If you experience a blank screen after logging in, this is typically related to the Wayland display protocol. Select **X11** from the session options on the login screen.
+### Base Installation Issues
 
-### Display Manager Not Starting
-Manually start the display manager:
+**Script fails with "Not running as root"**
+- The script must be run with root privileges on the live installation media
+
+**Disk not found**
+- Check disk name with `lsblk`
+- Use full path (e.g., `/dev/sda` not just `sda`)
+- For NVMe drives, use format like `/dev/nvme0n1`
+
+**UEFI boot issues**
+- Ensure your system is booted in UEFI mode
+- Check with: `ls /sys/firmware/efi/efivars`
+
+### Post-Installation Issues
+
+**Blank screen after login**
+- Select X11 instead of Wayland at the login screen
+
+**Display manager not starting**
+- Manually enable and start:
 ```bash
-# For KDE
-systemctl start sddm.service
-
-# For GNOME
-systemctl start gdm.service
+  sudo systemctl enable sddm.service  # For KDE
+  sudo systemctl start sddm.service
 ```
 
-### Package Installation Failures
-Ensure you have an active internet connection and your mirrors are properly configured:
+**Package installation failures**
+- Update mirrors: `sudo pacman -Syy`
+- Check internet connection: `ping archlinux.org`
+
+### Network Issues
+
+**No internet after installation**
 ```bash
-pacman -Syy
+sudo systemctl start NetworkManager
+sudo systemctl enable NetworkManager
+nmtui  # Use NetworkManager TUI to configure
 ```
 
+## Security Recommendations
+
+1. **Update regularly**:
+```bash
+   sudo pacman -Syu
+```
+
+2. **Enable firewall** (if installed):
+```bash
+   sudo systemctl start firewalld
+   sudo systemctl enable firewalld
+```
+
+3. **Configure automatic updates** (optional):
+```bash
+   sudo pacman -S pacman-contrib
+   sudo systemctl enable paccache.timer
+```
+
+## Customization
+
+### Modifying the Base Installation
+
+Edit `easy_arch_install.sh` to change:
+- Partition sizes (modify `sgdisk` commands)
+- Default packages (modify `pacstrap` line)
+- Additional configuration steps
+
+### Modifying Post-Installation
+
+Edit `arch_desktop_config.sh` to:
+- Add or remove packages
+- Change desktop environment options
+- Include additional configuration steps
+
+## Known Limitations
+
+- Designed primarily for UEFI systems
+- Creates simple two-partition layout (no separate home or swap)
+- Does not configure dual-boot scenarios
+- Requires wired or pre-configured wireless connection
+
+
+## Repository
+
+[https://github.com/ekoester96/Bash-Scripts](https://github.com/ekoester96/easy_arch_desktop_config)
+
+## Disclaimer
+
+These scripts are provided as-is. Always backup your data before installation. The author is not responsible for data loss or system damage.
+
+## Support
+
+For issues or questions:
+- Open an issue on GitHub
+- Check the Arch Linux wiki: https://wiki.archlinux.org
+- Visit the Arch Linux forums: https://bbs.archlinux.org
