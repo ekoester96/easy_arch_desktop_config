@@ -5,8 +5,8 @@ A complete set of bash scripts to automate both the base Arch Linux installation
 ## Overview
 
 This repository contains two scripts:
-1. **auto-arch-install.sh** - Automates the base Arch Linux installation
-2. **archinstall.sh** - Automates post-installation setup with desktop environment and applications
+1. **easy_arch_install.sh** - Automates the base Arch Linux installation
+2. **arch_desktop_config.sh** - Automates post-installation setup with desktop environment and applications
 
 ## Features
 
