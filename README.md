@@ -171,18 +171,3 @@ Ensure you have an active internet connection and your mirrors are properly conf
 pacman -Syy
 ```
 
-## License
-
-[Specify your license here]
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## Author
-
-ekoester96
-
-## Repository
-
-[https://github.com/ekoester96/Bash-Scripts](https://github.com/ekoester96/Bash-Scripts)
