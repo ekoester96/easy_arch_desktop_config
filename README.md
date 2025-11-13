@@ -264,7 +264,7 @@ Edit `arch_desktop_config.sh` to:
 
 ## Repository
 
-[https://github.com/ekoester96/Bash-Scripts](https://github.com/ekoester96/easy_arch_desktop_config)
+https://github.com/ekoester96/easy_arch_desktop_config
 
 ## Disclaimer
 
