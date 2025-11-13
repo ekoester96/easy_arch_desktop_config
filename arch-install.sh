@@ -1,18 +1,4 @@
 #!/bin/bash
-# Author: Ethan
-# Date: 4/25/25
-# Date Modified: 4/26/25
-# Decription: testing script for arch linux
-#1: Run command "archinstall" as root on system installation and configure system with guide below
-#2: Config: mirrors - select country, disk configuration - default, set root password and users, network configuration - Networkmanager
-#3: select yes to login as chroot
-#4: Download git "pacman -S git"
-#5: Run command "git clone https://github.com/ekoester96/Bash-Scripts"
-#6: Run command "cd Bash-Scripts"
-#7: Run command "chmod 744 archinstall.sh"
-#8: Run command "./archinstall.sh"
-#9: Alternatively you can use "wget https://raw.githubusercontent.com/ekoester96/Bash-Scripts/refs/heads/main/archinstall.sh" to download just the script
-#10: When installing press 1 or 2 for select commands and hit enter for Yes to confirm or n to not install
 
 PS3="Do you want to update the operating system? "
 
